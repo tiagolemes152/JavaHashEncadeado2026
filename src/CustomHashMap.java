@@ -1,4 +1,5 @@
 //Hash encadeado (ou encadeamento separado) é uma técnica usada em tabelas hash (ou tabelas de dispersão) para resolver colisões. 
+
 import java.util.LinkedList;
 
 public class CustomHashMap<T> {
@@ -27,7 +28,7 @@ public class CustomHashMap<T> {
         }
     }
 
-     public CustomHashMap() {
+    public CustomHashMap() {
         this.tamanho = 16;
         tabela = new LinkedList[tamanho];
         for (int i = 0; i < tamanho; i++) {
@@ -43,7 +44,7 @@ public class CustomHashMap<T> {
         if ((double) numElementos / tamanho >= DEFAULT_LOAD_FACTOR) {
             resize();
         }
-        
+
         Dado<T> dado = new Dado<>(key, value);
         int indice = funcaoHash(key);
         tabela[indice].add(dado);
@@ -73,14 +74,31 @@ public class CustomHashMap<T> {
     }
 
     public T get(long key) {
-        // implementar 
+        // implementar
         //Retorna o valor para o qual a chave especificada é mapeada ou null se este mapa não contém nenhum mapeamento para a chave.
-        return null; // 
+        int indice = funcaoHash(key);
+        for (Dado<T> item : tabela[indice]) {
+            comparacoes++;
+            if (item.chave == key) {
+                return item.valor;
+            }
+        }
+        return null;
     }
 
     public void replace(long key, T value) {
-        // implementar 
-        //Substitui a entrada da chave especificada para o valor V somente se ela estiver mapeada para algum valor.
+        int indice = funcaoHash(key);
+
+        for (Dado<T> item : tabela[indice]) {
+            comparacoes++;
+            if (item.chave == key) {
+                item.valor = value;
+                return;
+            }
+        }
+        // Se o laço terminar e não encontrar a chave, o método simplesmente acaba
+        // sem fazer nada, cumprindo a regra de "somente se ela estiver mapeada".
+    }
     }
 
 
